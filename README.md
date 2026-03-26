@@ -1,2 +1,2 @@
 # BOOM
-A  old school shooter in FPC/Lazarus
+An  old school shooter in FPC/Lazarus

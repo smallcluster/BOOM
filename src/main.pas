@@ -67,23 +67,8 @@ begin
     end;
 
     // Snap mouse to grid
-    lLength := lCellSize*lCellSize*2;
-    lSnapStart.X := lCellSize * (FMouse.X div lCellSize);
-    lSnapStart.Y := lCellSize * (FMouse.Y div lCellSize);
-
-    for I := 0 to 1 do
-    begin
-      for J := 0 to 1 do
-      begin
-        lTmpLength := (lSnapStart.X+I*lCellSize - FMouse.X)*(lSnapStart.X+I*lCellSize - FMouse.X) + (lSnapStart.Y+J*lCellSize - FMouse.Y)*(lSnapStart.Y+J*lCellSize - FMouse.Y);
-        if lTmpLength < lLength then
-        begin
-           lLength := lTmpLength;
-           lSnapMouse.X := lSnapStart.X+I*lCellSize;
-           lSnapMouse.Y := lSnapStart.Y+J*lCellSize;
-        end;
-      end;
-    end;
+    lSnapMouse.X := lCellSize * Round(FMouse.X / lCellSize);
+    lSnapMouse.Y := lCellSize * Round(FMouse.Y / lCellSize);
 
     Canvas.Brush.Color:= clWhite;
     Canvas.Pen.Color:= clNone;

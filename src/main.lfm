@@ -1,0 +1,28 @@
+object Form1: TForm1
+  Left = 457
+  Height = 605
+  Top = 250
+  Width = 840
+  Caption = 'BSP'
+  ClientHeight = 605
+  ClientWidth = 840
+  LCLVersion = '4.6.0.0'
+  object OptionsGroup: TGroupBox
+    Left = 0
+    Height = 605
+    Top = 0
+    Width = 185
+    Align = alLeft
+    Caption = 'Options'
+    TabOrder = 0
+  end
+  object PaintBox: TPaintBox
+    Left = 185
+    Height = 605
+    Top = 0
+    Width = 655
+    Align = alClient
+    OnMouseMove = PaintBoxMouseMove
+    OnPaint = PaintBoxPaint
+  end
+end

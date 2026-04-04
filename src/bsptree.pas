@@ -25,7 +25,29 @@ type
        property EndY     : Single read FEndY write FEndY;
        property TrueWall : TWall read FTrueWall write FTrueWall;
        constructor Create(ATrueWall : TWall);
+       function ToString : String; override;
   end;
+
+  TWallList = specialize TFPGObjectList<TWall>;
+
+  { TSector }
+
+  TSector = class
+    private
+      FWalls : TWallList;
+      FName : String;
+      FCenterX : Single;
+      FCenterY : Single;
+    public
+      constructor Create(AWalls : TWallList);
+      destructor Destroy;
+      property Walls : TWallList read FWalls;
+      property Name : String read FName write FName;
+      property CenterX : Single read FCenterX;
+      property CenterY : Single read FCenterY;
+  end;
+
+  TSectorList = specialize TFPGObjectList<TSector>;
 
   { TBSPNode }
 
@@ -44,8 +66,6 @@ type
 
   { TBSPTree }
 
-  TWallList = specialize TFPGObjectList<TWall>;
-
   TBSPTree = class
     private
       FWalls : TWallList;
@@ -63,6 +83,39 @@ implementation
 constructor TWall.Create(ATrueWall: TWall);
 begin
   FTrueWall := ATrueWall;
+end;
+
+function TWall.ToString: String;
+begin
+  Result:= '['+FloatToStr(StartX)+','+FloatToStr(StartY)+','+FloatToStr(EndX)+','+FloatToStr(EndY)+',';
+  if TrueWall = nil then
+     Result := Result + 'nil'
+  else
+    Result := Result + IntToStr(PtrUInt(TrueWall));
+  Result := Result + ']';
+end;
+
+{ TSector }
+
+constructor TSector.Create(AWalls: TWallList);
+var
+  lWall : TWall;
+begin
+  FWalls := TWallList.Create(False);
+
+  for lWall in AWalls do
+  begin
+    FWalls.Add(lWall);
+    FCenterX := FCenterX + lWall.StartX + lWall.EndX;
+    FCenterY := FCenterY + lWall.StartY + lWall.EndY;
+  end;
+  FCenterX := FCenterX / (2.0 * AWalls.Count);
+  FCenterY := FCenterY / (2.0 * AWalls.Count);
+end;
+
+destructor TSector.Destroy;
+begin
+  FWalls.Destroy;
 end;
 
 
@@ -87,7 +140,7 @@ end;
 
 constructor TBSPTree.Create;
 begin
-  FWalls := TWallList.Create;
+  FWalls := TWallList.Create(True);
   FRoot := nil;
 end;
 

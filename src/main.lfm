@@ -1,15 +1,17 @@
 object Form1: TForm1
   Left = 457
-  Height = 605
+  Height = 720
   Top = 250
-  Width = 840
+  Width = 1280
   Caption = 'BSP'
-  ClientHeight = 605
-  ClientWidth = 840
+  ClientHeight = 720
+  ClientWidth = 1280
   LCLVersion = '4.6.0.0'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   object OptionsGroup: TGroupBox
     Left = 0
-    Height = 605
+    Height = 590
     Top = 0
     Width = 185
     Align = alLeft
@@ -18,11 +20,31 @@ object Form1: TForm1
   end
   object PaintBox: TPaintBox
     Left = 185
-    Height = 605
+    Height = 590
     Top = 0
-    Width = 655
+    Width = 1095
     Align = alClient
+    OnClick = PaintBoxClick
     OnMouseMove = PaintBoxMouseMove
     OnPaint = PaintBoxPaint
+  end
+  object Logs: TMemo
+    Left = 0
+    Height = 125
+    Top = 595
+    Width = 1280
+    Align = alBottom
+    ReadOnly = True
+    ScrollBars = ssAutoVertical
+    TabOrder = 1
+  end
+  object Splitter1: TSplitter
+    Cursor = crVSplit
+    Left = 0
+    Height = 5
+    Top = 590
+    Width = 1280
+    Align = alBottom
+    ResizeAnchor = akBottom
   end
 end
